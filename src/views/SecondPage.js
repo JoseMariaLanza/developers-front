@@ -13,7 +13,7 @@ const SecondPage = () => {
   const [position, setPuesto] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3001/Puesto')
+    fetch('http://localhost:3003/Puesto')
       .then(response => response.json())
       .then(pues => setPuesto(pues))
   }, [])
@@ -21,7 +21,7 @@ const SecondPage = () => {
   const [tecno, setTecno] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3002/tecnologia')
+    fetch('http://localhost:3004/tecnologia')
       .then(response => response.json())
       .then(tec => setTecno(tec))
   }, [])
@@ -35,6 +35,7 @@ const SecondPage = () => {
       console.log(res)
       console.log(res.data)
     })
+    
   }
 
   return (
@@ -127,7 +128,7 @@ const SecondPage = () => {
         </Card>
         <Row className="d-flex justify-content-around">
           <Link to="/home"><Button.Ripple className="border border-primary" color="flat-primary">Cancelar</Button.Ripple></Link>
-          <Button.Ripple color='primary' type="submit">Agregar</Button.Ripple>
+          <Button.Ripple color='primary' type="submit" onclick="window.location = 'path-home'">Agregar</Button.Ripple>
         </Row>
       </Form>
     </div>

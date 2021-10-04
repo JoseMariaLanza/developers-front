@@ -8,7 +8,7 @@ const Home = () => {
 
 
   useEffect(() => {
-    fetch('http://localhost:3000/desarolladores')
+    fetch('http://192.168.1.141:8000/api/v1/developers')
       .then(response => response.json())
       .then(respuesta => setDatos(respuesta))
   }, [])
@@ -26,19 +26,19 @@ const Home = () => {
     },
     {
       name: "PROFESION",
-      selector: "profesion",
+      selector: "profession",
       sortable: true
     },
     { 
      
       name: "PUESTO",
-      selector: "puesto",
+      selector: "position",
       sortable: true
       
     },
     {
       name: "TECNOLOGIA",
-      selector: "tecnologia",
+      selector: "technology",
       sortable: true
     },
     {
@@ -65,7 +65,7 @@ const Home = () => {
             <DataTable
               className="p-3"
               columns={columnas}
-              data={datos}
+              data={datos.data}
             />
             <b-pagination
               v-model="currentPage"
