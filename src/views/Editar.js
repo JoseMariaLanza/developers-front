@@ -1,75 +1,89 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink, Form, Button, Input, Label, Row, FormGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
+
+import { Card, CardHeader, CardBody, CardTitle, Form, Button, Input, Label, Row, FormGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import {
-  BrowserRouter as Router,  Switch,  Route,  Link} from "react-router-dom"
+  BrowserRouter as Router, Switch, Route, Link
+} from "react-router-dom"
 import { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { useForm } from 'react-hook-form'
-export const editar = () => {
+import axios from 'axios'
+import { Circle } from 'react-feather'
 
-    const [puesto, setPuesto] = useState([])
+const Editar = () => {
 
-    useEffect(() => {
-      fetch('http://localhost:3001/Puesto')
-        .then(response => response.json())
-        .then(pues => setPuesto(pues))
-    }, [])
-  
-    const [tecno, setTecno] = useState([])
-  
-    useEffect(() => {
-      fetch('http://localhost:3002/tecnologia')
-        .then(response => response.json())
-        .then(tec => setTecno(tec))
-    }, [])
+  const [position, setPuesto] = useState([])
 
-    return (
-        <div className="container">
-        <Breadcrumb className="mb-2">
-          <BreadcrumbItem><a href="home">Home</a></BreadcrumbItem>
-          <BreadcrumbItem active><a href="#">Desarrolladores</a></BreadcrumbItem>
-          <BreadcrumbItem active>Editar</BreadcrumbItem>
-        </Breadcrumb>
-        <Card >
-          <CardHeader>
-            <CardTitle tag='h4'>Agregar nuevo Desarrollador</CardTitle>
+  useEffect(() => {
+    fetch('http://localhost:3003/Puestos')
+      .then(response => response.json())
+      .then(pues => setPuesto(pues))
+  }, [])
+
+  const [tecno, setTecno] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:3004/Tecnologia')
+      .then(response => response.json())
+      .then(tec => setTecno(tec))
+  }, [])
+
+  const { register, handleSubmit, setValue } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data)
+    axios.post('http://192.168.1.141:8000/api/v1/developers', data)
+    .then(res => {
+      console.log(res)
+      console.log(res.data)
+    })
+  }
+
+  return (
+    <div className="container">
+      <Breadcrumb className="mb-2">
+      <BreadcrumbItem><a href="home"><Circle /></a></BreadcrumbItem>
+        <BreadcrumbItem><a href="home">Home</a></BreadcrumbItem>
+        <BreadcrumbItem active><a href="#">Desarrolladores</a></BreadcrumbItem>
+        <BreadcrumbItem active>Editar</BreadcrumbItem>
+      </Breadcrumb>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Card>
+          <CardHeader className="border">
+          <Breadcrumb>
+        <BreadcrumbItem>Editar</BreadcrumbItem>
+        <BreadcrumbItem active>Max</BreadcrumbItem>
+      </Breadcrumb>
           </CardHeader>
-          <CardBody>
-            <Form onSubmit={handleSubmit(tabla)}>
-            <div className="d-flex justify-content-center mr-4 mb-4">
-              <div className="col-4 mr-5 mt-2">
-                <FormGroup>
+          <CardBody className="border">
+            <div className="justify-content-center container">
+              <div className="d-flex flex-wrap justify-content-center my-2">
+                <FormGroup className="col-6 my-2">
                   <Label for="name">Nombre</Label>
-                  <Input type="text" name="name" id="exampleEmail" placeholder="Nombre" />
+                  <Input type="text" name="name" placeholder="Nombre" />
                 </FormGroup>
-              </div>
-              <div className="col-4 mt-2">
-                <FormGroup>
+                <FormGroup className="col-6 my-2">
                   <Label for="name">Profesion</Label>
-                  <Input type="text" name="name" id="exampleEmail" placeholder="Profesion" />
+                  <Input type="text" name="name" placeholder="Profesion" />
                 </FormGroup>
-              </div>
-            </div>
-            <div className="d-flex mt-3 justify-content-center mr-4">
-              <div className="col-4">
-                <FormGroup>
+                <FormGroup className="col-6 ms-auto">
                   <Label for="name">Tecnologia</Label>
                   <Select options={tecno} placeholder="Tecnologia" />
                 </FormGroup>
-              </div>
-              <div className="col-4 ml-5">
-                <FormGroup>
+                <FormGroup className="col-6 ms-auto">
                   <Label for="name">Puesto</Label>
-                  <Select options={puesto} placeholder="Puestos" />
+                  <Select options={position} placeholder="Puestos" />
                 </FormGroup>
               </div>
+              <div className="d-flex justify-content-between mx-1">
+                <Link to="/home"><Button.Ripple className="border border-primary" color="flat-primary">Cancelar</Button.Ripple></Link>
+                <Button.Ripple color='primary' type="submit">Editar</Button.Ripple>
+              </div>
             </div>
-            </Form>
           </CardBody>
         </Card>
-        <Row className="d-flex justify-content-around">
-          <Link to="/home"><Button.Ripple className="border border-primary" color="flat-primary">Cancelar</Button.Ripple></Link>
-          <Button.Ripple color='primary' type="submit" >Agregar</Button.Ripple>
-        </Row>
-      </div>
-    )
+      </Form>
+    </div>
+  )
 }
+
+export default Editar
