@@ -70,13 +70,13 @@ const SecondPage = () => {
                   />
                 </FormGroup>
                 <FormGroup className="col-6 my-2">
-                  <Label for="profession">Profesion</Label>
+                  <Label for="profession">Profesión</Label>
                   <input
                     className="form-control"
                     type="text"
                     name="profession"
                     id="profession"
-                    placeholder="profession"
+                    placeholder="profesión"
                     ref={
                       register({
                         required: { value: true, message: 'Este campo es obligatorio' }
@@ -87,7 +87,7 @@ const SecondPage = () => {
                   <Label for="technology">Tecnologia</Label>
                   <Select
                     options={tecno}
-                    placeholder="Tecnologia"
+                    placeholder="Tecnología"
                     id="technology"
                     ref={
                       register('technology')
@@ -103,7 +103,7 @@ const SecondPage = () => {
                   <Label for="position">Puesto</Label>
                   <Select
                     options={position}
-                    placeholder="position"
+                    placeholder="puesto"
                     id="position"
                     ref={
                       register('position')
