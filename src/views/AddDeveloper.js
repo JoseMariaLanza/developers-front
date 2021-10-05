@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardBody, CardTitle, Form, Button, Input, Label, Row, FormGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import {
-  BrowserRouter as Router, Switch, Route, Link
+  BrowserRouter as Router, Switch, Route, Link, useHistory
 } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import Select from 'react-select'
@@ -27,33 +27,21 @@ const SecondPage = () => {
       .then(tech => setTecno(tech))
   }, [])
 
+  const history = useHistory()
   const { register, handleSubmit, setValue } = useForm()
 
   const onSubmit = (data) => {
     console.log(data)
     axios.post('http://192.168.1.141:8000/api/v1/developers', data)
       .then(res => {
-        console.log(res)
-        console.log(res.data)
+        console.log("res: ", res)
+        console.log("res.data: ", res.data)
+        if (res.data.success) {
+          history.push('/home')
+        }
       })
   }
 
-  // fetch(` http://192.168.1.141:8000/api/v1/developers`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(),
-  //   headers: {
-  //     'Content-Type': 'home'
-  //   }
-  // })
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     if (setValue.success) {
-  //       toast.success('Desarrollador agregado correctamente')
-  //       history.push('home')
-  //     } else {
-  //       toast.error(res.message)
-  //     }
-  //   }).catch(console.log)
 
   return (
     <div className="container">

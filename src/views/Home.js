@@ -6,7 +6,7 @@ import {
 import DataTable from 'react-data-table-component'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import { useEffect, useState } from 'react'
-import { Circle, MoreVertical } from 'react-feather'
+import { Home as HomeIcon, MoreVertical } from 'react-feather'
 
 const Home = () => {
 
@@ -102,8 +102,8 @@ const Home = () => {
     <div>
       <div className="container">
         <Breadcrumb className="mb-2">
-          <BreadcrumbItem><a href="home"><Circle /></a></BreadcrumbItem>
-          <BreadcrumbItem><a href="#">Home</a></BreadcrumbItem>
+          <BreadcrumbItem><a href="home"><HomeIcon size={20}/></a></BreadcrumbItem>
+          <BreadcrumbItem><a href="home">Home</a></BreadcrumbItem>
           <BreadcrumbItem active>Desarroladores</BreadcrumbItem>
         </Breadcrumb>
         <Card >

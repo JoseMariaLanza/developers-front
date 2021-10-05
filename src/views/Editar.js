@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardBody, CardTitle, Form, Button, Input, Label, Row, FormGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import {
-  BrowserRouter as Router, Switch, Route, Link
+  BrowserRouter as Router, Switch, Route, Link, useHistory
 } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import Select from 'react-select'
@@ -43,7 +43,8 @@ const Editar = (props) => {
       .then(response => response.json())
       .then(data => setTechnology(data))
   }, [])
-  //console.log('technology', technology)
+
+  const history = useHistory()
   const { register, handleSubmit, setValue } = useForm()
 
   const onSubmit = () => {
@@ -52,6 +53,9 @@ const Editar = (props) => {
       .then(res => {
         console.log("res: ", res)
         console.log("res.data: ", res.data)
+        if (res.data.success) {
+          history.push('/home')
+        }
       })
   }
 
