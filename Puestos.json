@@ -1,0 +1,20 @@
+{
+    "Puesto": [
+        {
+            "value": "Full Stack",
+            "label":"Full Stack"
+        },
+        {
+            "value":"Front-End",
+            "label":"Front-End"
+        },
+        {
+            "value": "Backend",
+            "label":"Backend"
+        },
+        {
+            "value": "Sistemas",
+            "label": "Sistemas"
+        }        
+    ]
+}

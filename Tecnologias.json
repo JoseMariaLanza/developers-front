@@ -1,0 +1,21 @@
+
+{
+    "tecnologia": [
+        {
+            "value": "ReactJS",
+            "label":"ReactJS"
+        },
+        {
+            "value":"VueJs",
+            "label":"VueJs"
+        },
+        {
+            "value": "Laravel",
+            "label":"Laravel"
+        },
+        {
+            "value": "Bootstrap",
+            "label": "Bootstrap"
+        }        
+    ]
+}
