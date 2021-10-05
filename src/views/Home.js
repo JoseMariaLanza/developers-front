@@ -7,8 +7,6 @@ import DataTable from 'react-data-table-component'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import { Circle, MoreVertical } from 'react-feather'
-import { useForm } from 'react-hook-form'
-import { Redirect } from 'react-router'
 
 const Home = () => {
 
@@ -66,24 +64,7 @@ const Home = () => {
           technology: row.technology
         }
 
-        const handlerEdit = (developer) => {
-          // console.log(developer)
-          // fetch(`http://192.168.1.141:8000/api/v1/developers/${developer.id}`, {
-          //   method: 'GET' // or 'PUT'
-          // }).then(res => res.json())
-          // .then(res => console.log(res))
-
-          // return (
-          //   <Redirect to= {{
-          //     pathname: `/editar/${developer.id}`,
-          //     state: developer
-          //   }} />
-          // )
-
-        }
-
         const handlerDelete = (id) => {
-          // console.log(id)
           fetch(`http://192.168.1.141:8000/api/v1/developers/${id}`, {
             method: 'DELETE' // or 'PUT'
           }).then(res => res.json())
@@ -95,13 +76,6 @@ const Home = () => {
               <MoreVertical />
             </DropdownToggle>
             <DropdownMenu>
-              {/* <DropdownItem href='/' onClick={(e) => {
-                e.preventDefault()
-                handlerEdit(developer)
-              }}>
-                Editar
-              </DropdownItem> */}
-              {/* <DropdownItem href="/"> */}
                 <Link className="dropdown-item"
                   to={{
                     pathname: `/editar/${developer.id}`,
@@ -110,7 +84,6 @@ const Home = () => {
                 >
                   Editar
                 </Link>
-              {/* </DropdownItem> */}
 
               <DropdownItem href="/" onClick={(e) => {
                 e.preventDefault()
@@ -136,7 +109,7 @@ const Home = () => {
         <Card >
           <CardHeader className="border">
             <CardTitle>Tabla de Desarrolladores</CardTitle>
-            <Link to="/second-page"><Button.Ripple color='primary'> + Agregar</Button.Ripple></Link>
+            <Link to="/agregar-desarrollador"><Button.Ripple color='primary'> + Agregar</Button.Ripple></Link>
           </CardHeader>
           <CardBody className="border">
             <DataTable

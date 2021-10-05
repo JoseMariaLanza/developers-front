@@ -1,6 +1,6 @@
 
 {
-    "tecnologia": [
+    "technologies": [
         {
             "value": "ReactJS",
             "label":"ReactJS"

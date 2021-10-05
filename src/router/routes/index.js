@@ -13,8 +13,8 @@ const Routes = [
     component: lazy(() => import('../../views/Home'))
   },
   {
-    path: '/second-page',
-    component: lazy(() => import('../../views/SecondPage'))
+    path: '/agregar-desarrollador',
+    component: lazy(() => import('../../views/AddDeveloper'))
   },
   {
     path: '/editar',

@@ -11,6 +11,14 @@ import { Circle } from 'react-feather'
 
 const Editar = (props) => {
   const developer = props.location.state
+  const currentPosition = {
+    value: developer.position,
+    label: developer.position
+  }
+  const currentTechnology = {
+    value: developer.technology,
+    label: developer.technology
+  }
 
   const [datos, setDatos] = useState([])
 
@@ -23,28 +31,28 @@ const Editar = (props) => {
   const [position, setPuesto] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3003/Puestos')
+    fetch('http://localhost:3003/positions')
       .then(response => response.json())
-      .then(pues => setPuesto(pues))
+      .then(data => setPuesto(data))
   }, [])
 
   const [technology, setTechnology] = useState([])
 
   useEffect(() => {
-    fetch('http://localhost:3004/Tecnologia')
+    fetch('http://localhost:3004/technologies')
       .then(response => response.json())
-      .then(tech => setTechnology(tech))
+      .then(data => setTechnology(data))
   }, [])
   //console.log('technology', technology)
   const { register, handleSubmit, setValue } = useForm()
 
-  const onSubmit = (data) => {
-    console.log(data)
-    // axios.post('http://192.168.1.141:8000/api/v1/developers', data)
-    //   .then(res => {
-    //     console.log(res)
-    //     console.log(res.data)
-    //   })
+  const onSubmit = () => {
+    console.log(developer)
+    axios.put(`http://192.168.1.141:8000/api/v1/developers/${developer.id}`, developer)
+      .then(res => {
+        console.log("res: ", res)
+        console.log("res.data: ", res.data)
+      })
   }
 
   return (
@@ -56,7 +64,7 @@ const Editar = (props) => {
           <BreadcrumbItem active><a href="#">Desarrolladores</a></BreadcrumbItem>
           <BreadcrumbItem active>Editar</BreadcrumbItem>
         </Breadcrumb>
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Card>
             <CardHeader className="border">
               <Breadcrumb >
@@ -69,26 +77,54 @@ const Editar = (props) => {
                 <div className="d-flex flex-wrap justify-content-center my-2">
                   <FormGroup className="col-6 my-2">
                     <Label for="name">Nombre</Label>
-                    <Input type="text" name="name" placeholder="Nombre" value={developer.name} />
+                    <Input type="text" name="name" placeholder="Nombre"
+                    ref={
+                      register('name')
+                    }
+                    defaultValue={developer.name}
+                    onChange={(e) => {
+                      developer.name = e.target.value
+                    }}
+                    />
                   </FormGroup>
                   <FormGroup className="col-6 my-2">
                     <Label for="name">Profesion</Label>
-                    <Input type="text" name="name" placeholder="Profesion" value={developer.profession} />
-                  </FormGroup>
-                  <FormGroup className="col-6 ms-auto">
-                    <Label for="name">Tecnologia</Label>
-                    <Select options={technology} placeholder="Tecnologia" name="technology"
-                      ref={
-                        register('technology')
-                      }
-                      defaultValue={() => {
-                        setValue('technology', developer.technology)
-                      }}
+                    <Input type="text" name="name" placeholder="Profesion"
+                    ref={
+                      register('profession')
+                    }
+                    defaultValue={developer.profession}
+                    onChange={(e) => {
+                      developer.profession = e.target.value
+                      // setValue('profession', e.target.value)
+                    }}
                     />
                   </FormGroup>
                   <FormGroup className="col-6 ms-auto">
                     <Label for="name">Puesto</Label>
-                    <Select options={position} placeholder="Puestos" name="position" />
+                    <Select options={position} placeholder="Puestos" name="position"
+                      ref={
+                        register('position')
+                      }
+                      defaultValue={currentPosition}
+                      onChange={(e) => {
+                        developer.position = e.label
+                        setValue('position', e.label)
+                      }}
+                    />
+                  </FormGroup>
+                  <FormGroup className="col-6 ms-auto">
+                    <Label for="name">Tecnologia</Label>
+                    <Select options={technology} placeholder="Tecnología" name="technology"
+                      ref={
+                        register('technology')
+                      }
+                      defaultValue={currentTechnology}
+                      onChange={(e) => {
+                        developer.technology = e.label
+                        setValue('technology', e.label)
+                      }}
+                    />
                   </FormGroup>
                 </div>
                 <div className="d-flex justify-content-between mx-1">
