@@ -38,93 +38,110 @@ const SecondPage = () => {
       })
   }
 
-  return (
-    <div className="container">
-      <Breadcrumb className="mb-2">
-        <BreadcrumbItem><a href="home"><Circle /></a></BreadcrumbItem>
-        <BreadcrumbItem><a href="home">Home</a></BreadcrumbItem>
-        <BreadcrumbItem active><a href="#">Desarrolladores</a></BreadcrumbItem>
-        <BreadcrumbItem active>Editar</BreadcrumbItem>
-      </Breadcrumb>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Card>
-          <CardHeader className="border">
-            <CardTitle className="">Agregar nuevo Desarrollador</CardTitle>
-          </CardHeader>
-          <CardBody className="border">
-            <div className="justify-content-center container">
-              <div className="d-flex flex-wrap justify-content-center my-2">
-                <FormGroup className="col-6 my-2">
-                  <Label for="name">Nombre</Label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="name"
-                    id="name"
-                    placeholder="Nombre"
-                    ref={
-                      register({
-                        required: { value: true, message: 'Este campo es obligatorio' }
-                      })
-                    }
-                  />
-                </FormGroup>
-                <FormGroup className="col-6 my-2">
-                  <Label for="profession">Profesion</Label>
-                  <input
-                    className="form-control"
-                    type="text"
-                    name="profession"
-                    id="profession"
-                    placeholder="profession"
-                    ref={
-                      register({
-                        required: { value: true, message: 'Este campo es obligatorio' }
-                      })
-                    } />
-                </FormGroup>
-                <FormGroup className="col-6 ms-auto">
-                  <Label for="technology">Tecnologia</Label>
-                  <Select
-                    options={tecno}
-                    placeholder="Tecnologia"
-                    id="technology"
-                    ref={
-                      register('technology')
-                    }
-                    onChange={(e) => {
-                      setValue('technology', e.label)
-                    }
+   fetch(` http://192.168.1.141:8000/api/v1/developers`,  {
+     method: 'POST', 
+     body: JSON.stringify(), 
+     headers: {
+       'Content-Type': 'home'
+     }
+   })
+     .then(res => res.json())
+     .then(res => {
+       if (setValue.success) {
+         toast.success('Desarrollador agregado correctamente')
+         history.push('home')
+       } else {
+         toast.error(res.message)
+       }
+     }).catch(console.log)
 
-                    }
-                  />
-                </FormGroup>
-                <FormGroup className="col-6 ms-auto">
-                  <Label for="position">Puesto</Label>
-                  <Select
-                    options={position}
-                    placeholder="position"
-                    id="position"
-                    ref={
-                      register('position')
-                    }
-                    onChange={(e) => {
-                      setValue('position', e.label)
-                    }
-                    }
-                  />
-                </FormGroup>
-              </div>
-              <div className="d-flex justify-content-between mx-1">
-                <Link to="/home"><Button.Ripple className="border border-primary" color="flat-primary">Cancelar</Button.Ripple></Link>
-                <Button.Ripple color='primary' type="submit">Agregar</Button.Ripple>
-              </div>
+return (
+  <div className="container">
+    <Breadcrumb className="mb-2">
+      <BreadcrumbItem><a href="home"><Circle /></a></BreadcrumbItem>
+      <BreadcrumbItem><a href="home">Home</a></BreadcrumbItem>
+      <BreadcrumbItem active><a href="#">Desarrolladores</a></BreadcrumbItem>
+      <BreadcrumbItem active>Editar</BreadcrumbItem>
+    </Breadcrumb>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <Card>
+        <CardHeader className="border">
+          <CardTitle className="">Agregar nuevo Desarrollador</CardTitle>
+        </CardHeader>
+        <CardBody className="border">
+          <div className="justify-content-center container">
+            <div className="d-flex flex-wrap justify-content-center my-2">
+              <FormGroup className="col-6 my-2">
+                <Label for="name">Nombre</Label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder="Nombre"
+                  ref={
+                    register({
+                      required: { value: true, message: 'Este campo es obligatorio' }
+                    })
+                  }
+                />
+              </FormGroup>
+              <FormGroup className="col-6 my-2">
+                <Label for="profession">Profesion</Label>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="profession"
+                  id="profession"
+                  placeholder="profession"
+                  ref={
+                    register({
+                      required: { value: true, message: 'Este campo es obligatorio' }
+                    })
+                  } />
+              </FormGroup>
+              <FormGroup className="col-6 ms-auto">
+                <Label for="technology">Tecnologia</Label>
+                <Select
+                  options={tecno}
+                  placeholder="Tecnologia"
+                  id="technology"
+                  ref={
+                    register('technology')
+                  }
+                  onChange={(e) => {
+                    setValue('technology', e.label)
+                  }
+
+                  }
+                />
+              </FormGroup>
+              <FormGroup className="col-6 ms-auto">
+                <Label for="position">Puesto</Label>
+                <Select
+                  options={position}
+                  placeholder="position"
+                  id="position"
+                  ref={
+                    register('position')
+                  }
+                  onChange={(e) => {
+                    setValue('position', e.label)
+                  }
+                  }
+                />
+              </FormGroup>
             </div>
-          </CardBody>
-        </Card>
-      </Form>
-    </div>
-  )
+            <div className="d-flex justify-content-between mx-1">
+              <Link to="/home"><Button.Ripple className="border border-primary" color="flat-primary">Cancelar</Button.Ripple></Link>
+              <Button.Ripple color='primary' type="submit">Agregar</Button.Ripple>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </Form>
+  </div>
+)
 }
 
 export default SecondPage
