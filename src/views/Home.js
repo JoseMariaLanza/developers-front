@@ -4,18 +4,21 @@ import {
   UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from 'reactstrap'
 import DataTable from 'react-data-table-component'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom"
 import { useEffect, useState } from 'react'
 import { Home as HomeIcon, MoreVertical } from 'react-feather'
 
 const Home = () => {
 
-  const [datos, setDatos] = useState([])
+  const [developers, setDevelopers] = useState([])
 
   useEffect(() => {
-    fetch('http://192.168.1.141:8000/api/v1/developers')
+    fetch('http://localhost:8000/api/v1/developers')
       .then(response => response.json())
-      .then(respuesta => setDatos(respuesta))
+      .then(res => {
+        console.log(res.desarrolladores)
+        return setDevelopers(res.desarrolladores.data.reverse())
+      })
   }, [])
 
   const columnas = [
@@ -64,10 +67,16 @@ const Home = () => {
           technology: row.technology
         }
 
+        const history = useHistory()
         const handlerDelete = (id) => {
-          fetch(`http://192.168.1.141:8000/api/v1/developers/${id}`, {
+          fetch(`http://localhost:8000/api/v1/developers/${id}`, {
             method: 'DELETE' // or 'PUT'
-          }).then(res => res.json())
+          }).then(res => {
+            console.log(res)
+            if (res.status === 204) {
+              history.push('/home')
+            }
+          })
         }
 
         return (
@@ -114,20 +123,20 @@ const Home = () => {
           <CardBody className="border">
             <DataTable
               columns={columnas}
-              data={datos.data}
+              data={developers}
               selectableRows
             />
-            <b-pagination
+            {/* <b-pagination
               v-model="currentPage"
               hide-goto-end-buttons
-            />
+            /> */}
 
           </CardBody>
           <CardFooter className="d-flex justify-content-between border
           ">
             <div><CardText className="text-muted">Mostrando 1 to 3 entradas</CardText></div>
 
-            <Pagination >
+            {/* <Pagination >
               <PaginationItem disabled>
                 <PaginationLink previous href="#" />
               </PaginationItem>
@@ -139,7 +148,7 @@ const Home = () => {
               <PaginationItem disabled>
                 <PaginationLink next href="#" />
               </PaginationItem>
-            </Pagination>
+            </Pagination> */}
           </CardFooter>
         </Card>
       </div>

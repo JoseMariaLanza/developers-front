@@ -8,6 +8,7 @@ import Select from 'react-select'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Circle } from 'react-feather'
+import { CustomReactSelect } from './CustomReactSelect'
 
 const Editar = (props) => {
   const developer = props.location.state
@@ -19,14 +20,6 @@ const Editar = (props) => {
     value: developer.technology,
     label: developer.technology
   }
-
-  const [datos, setDatos] = useState([])
-
-  useEffect((id) => {
-    fetch(`http://192.168.1.141:8000/api/v1/developers/${id}`)
-      .then(response => response.json())
-      .then(respuesta => setDatos(respuesta))
-  }, [])
 
   const [position, setPuesto] = useState([])
 
@@ -49,7 +42,7 @@ const Editar = (props) => {
 
   const onSubmit = () => {
     console.log(developer)
-    axios.put(`http://192.168.1.141:8000/api/v1/developers/${developer.id}`, developer)
+    axios.put(`http://localhost:8000/api/v1/developers/${developer.id}`, developer)
       .then(res => {
         console.log("res: ", res)
         console.log("res.data: ", res.data)
@@ -106,7 +99,7 @@ const Editar = (props) => {
                   </FormGroup>
                   <FormGroup className="col-6 ms-auto">
                     <Label for="name">Puesto</Label>
-                    <Select options={position} placeholder="Puestos" name="position"
+                    <CustomReactSelect options={position} placeholder="Puestos" name="position"
                       ref={
                         register('position')
                       }
@@ -115,11 +108,12 @@ const Editar = (props) => {
                         developer.position = e.label
                         setValue('position', e.label)
                       }}
+                      required
                     />
                   </FormGroup>
                   <FormGroup className="col-6 ms-auto">
                     <Label for="name">Tecnologia</Label>
-                    <Select options={technology} placeholder="Tecnología" name="technology"
+                    <CustomReactSelect options={technology} placeholder="Tecnología" name="technology"
                       ref={
                         register('technology')
                       }

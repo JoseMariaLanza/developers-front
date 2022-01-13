@@ -8,6 +8,7 @@ import Select from 'react-select'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Circle } from 'react-feather'
+import { CustomReactSelect } from './CustomReactSelect'
 
 const SecondPage = () => {
 
@@ -32,7 +33,7 @@ const SecondPage = () => {
 
   const onSubmit = (data) => {
     console.log(data)
-    axios.post('http://192.168.1.141:8000/api/v1/developers', data)
+    axios.post('http://localhost:8000/api/v1/developers', data)
       .then(res => {
         console.log("res: ", res)
         console.log("res.data: ", res.data)
@@ -90,7 +91,7 @@ const SecondPage = () => {
                 </FormGroup>
                 <FormGroup className="col-6 ms-auto">
                   <Label for="position">Puesto</Label>
-                  <Select
+                  <CustomReactSelect
                     options={position}
                     placeholder="Puesto"
                     id="position"
@@ -104,7 +105,7 @@ const SecondPage = () => {
                 </FormGroup>
                 <FormGroup className="col-6 ms-auto">
                   <Label for="technology">Tecnologia</Label>
-                  <Select
+                  <CustomReactSelect
                     options={tech}
                     placeholder="Tecnología"
                     id="technology"
